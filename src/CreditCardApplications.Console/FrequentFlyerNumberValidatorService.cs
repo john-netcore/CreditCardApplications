@@ -4,6 +4,12 @@ namespace CreditCardApplications.Console
     {
         public string License => throw new System.NotImplementedException("For Demo purposes");
 
+        public ValidationMode ValidationMode
+        {
+            get => throw new System.NotImplementedException("For Demo purposes");
+            set => throw new System.NotImplementedException("For Demo purposes");
+        }
+
         public bool IsValid(string frequentflyerNumber)
         {
             throw new System.NotImplementedException("For Demo Purposes.");
