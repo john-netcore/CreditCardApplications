@@ -22,7 +22,7 @@ namespace CreditCardApplications.Console
                 return CreditCardApplicationDecision.AutoAccepted;
             }
 
-            var isValidFrequentFlyerValid = _validator.IsValid(application.FrequentFlyerNumber);
+            _validator.IsValid(application.FrequentFlyerNumber, out var isValidFrequentFlyerValid);
 
             if (!isValidFrequentFlyerValid)
             {
