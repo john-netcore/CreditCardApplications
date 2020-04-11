@@ -103,6 +103,20 @@ namespace CreditCardApplications.Tests
         }
 
         [Fact]
+        public void ValidateFrequentFlyerNumberForLowIncomeApplications()
+        {
+            bool isValid = true;
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+            mockValidator.Setup(x => x.License).Returns("OK");
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+            var crediCardApplication = new CreditCardApplication();
+
+            sut.Evaluate(crediCardApplication);
+            mockValidator.Verify(x => x.IsValid(null, out isValid), Times.Once);
+        }
+
+        [Fact]
         public void NotValidateFrequentFlyerNumberForHighIncomeApplications()
         {
             bool isValid = true;
