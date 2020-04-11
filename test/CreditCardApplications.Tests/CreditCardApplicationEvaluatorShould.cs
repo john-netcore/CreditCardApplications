@@ -37,15 +37,15 @@ namespace CreditCardApplications.Tests
         public void DeclineLowIncomeApplications()
         {
             Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
-            // Adding argument and return value == true to the method.
-            mockValidator.Setup(x => x.IsValid("x")).Returns(true);
+            // Using It.IsAny() as argument and return value == true to the method.
+            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication
             {
                 Age = 50,
                 GrossAnnualIncome = 19_999,
-                FrequentFlyerNumber = "x" //Must add the same value as given as paramenter in the mock object.
+                FrequentFlyerNumber = "any string suffices or null to return true if It.IsAny() is used as param in Mock setup"
             };
 
             var expected = sut.Evaluate(crediCardApplication);
