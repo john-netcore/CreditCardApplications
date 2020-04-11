@@ -2,6 +2,8 @@ namespace CreditCardApplications.Console
 {
     public class FrequentFlyerNumberValidatorService : IFrequentFlyerNumberValidator
     {
+        public string License => throw new System.NotImplementedException("For Demo purposes");
+
         public bool IsValid(string frequentflyerNumber)
         {
             throw new System.NotImplementedException("For Demo Purposes.");
