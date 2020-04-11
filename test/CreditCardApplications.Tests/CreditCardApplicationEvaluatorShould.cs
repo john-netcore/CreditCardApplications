@@ -1,5 +1,6 @@
 using System;
 using CreditCardApplications.Console;
+using Moq;
 using Xunit;
 
 namespace CreditCardApplications.Tests
@@ -9,7 +10,9 @@ namespace CreditCardApplications.Tests
         [Fact]
         public void AcceptHighIncomeApplications()
         {
-            var sut = new CreditCardApplicationEvaluator();
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication { GrossAnnualIncome = 20_000 };
 
             var expected = sut.Evaluate(crediCardApplication);
@@ -20,7 +23,9 @@ namespace CreditCardApplications.Tests
         [Fact]
         public void ReferYoungApplications()
         {
-            var sut = new CreditCardApplicationEvaluator();
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication { Age = 19 };
 
             var expected = sut.Evaluate(crediCardApplication);
