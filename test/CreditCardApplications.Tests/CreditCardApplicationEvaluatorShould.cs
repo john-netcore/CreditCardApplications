@@ -52,5 +52,19 @@ namespace CreditCardApplications.Tests
 
             Assert.Equal(CreditCardApplicationDecision.AutoDeclined, expected);
         }
+
+        [Fact]
+        public void ReferInvalidFrequentFlyerApplications()
+        {
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>(MockBehavior.Strict);
+            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(false);
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+            var crediCardApplication = new CreditCardApplication();
+
+            var expected = sut.Evaluate(crediCardApplication);
+
+            Assert.Equal(CreditCardApplicationDecision.ReferredToHuman, expected);
+        }
     }
 }
