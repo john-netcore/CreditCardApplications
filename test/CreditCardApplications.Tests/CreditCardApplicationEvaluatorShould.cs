@@ -37,15 +37,15 @@ namespace CreditCardApplications.Tests
         public void DeclineLowIncomeApplications()
         {
             Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
-            // Using It.Is() with predicate to check correct value.
-            mockValidator.Setup(x => x.IsValid(It.Is<string>(x => (x.StartsWith("110x"))))).Returns(true);
+            // Using It.IsIn() for setting multiple accepted values.
+            mockValidator.Setup(x => x.IsValid(It.IsIn<string>("x", "y", "z"))).Returns(true);
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication
             {
                 Age = 50,
                 GrossAnnualIncome = 19_999,
-                FrequentFlyerNumber = "110x234892390"
+                FrequentFlyerNumber = "y" //Must be one of the accepted values for the Mock object to return true.
             };
 
             var expected = sut.Evaluate(crediCardApplication);
