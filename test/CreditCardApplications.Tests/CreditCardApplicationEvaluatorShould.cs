@@ -26,6 +26,7 @@ namespace CreditCardApplications.Tests
             bool isValid = true;
             Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>(MockBehavior.Strict);
             mockValidator.Setup(x => x.IsValid(It.IsAny<string>(), out isValid));
+            mockValidator.Setup(x => x.License).Returns("OK");
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication { Age = 19 };
@@ -61,6 +62,7 @@ namespace CreditCardApplications.Tests
             bool isValid = false;
             Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>(MockBehavior.Strict);
             mockValidator.Setup(x => x.IsValid(It.IsAny<string>(), out isValid));
+            mockValidator.Setup(x => x.License).Returns("OK");
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication();
