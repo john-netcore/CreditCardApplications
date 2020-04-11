@@ -85,5 +85,21 @@ namespace CreditCardApplications.Tests
 
             Assert.Equal(CreditCardApplicationDecision.ReferredToHuman, expected);
         }
+
+        [Fact]
+        public void UseDetailedLookupForOlderApplications()
+        {
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+            mockValidator.Setup(x => x.License).Returns("OK");
+            // To be able to track the changes made to the property.
+            mockValidator.SetupProperty(x => x.ValidationMode);
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+            var crediCardApplication = new CreditCardApplication { Age = 30 };
+
+            var expected = sut.Evaluate(crediCardApplication);
+
+            Assert.Equal(ValidationMode.Detailed, mockValidator.Object.ValidationMode);
+        }
     }
 }
