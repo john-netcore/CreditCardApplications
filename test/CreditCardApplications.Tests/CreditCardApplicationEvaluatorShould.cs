@@ -23,7 +23,8 @@ namespace CreditCardApplications.Tests
         [Fact]
         public void ReferYoungApplications()
         {
-            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>(MockBehavior.Strict);
+            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication { Age = 19 };
