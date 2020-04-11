@@ -97,9 +97,23 @@ namespace CreditCardApplications.Tests
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var crediCardApplication = new CreditCardApplication { Age = 30 };
 
-            var expected = sut.Evaluate(crediCardApplication);
+            sut.Evaluate(crediCardApplication);
 
             Assert.Equal(ValidationMode.Detailed, mockValidator.Object.ValidationMode);
+        }
+
+        [Fact]
+        public void ShouldValidateFrequentFlyerNumberForLowIncomeApplications()
+        {
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+            mockValidator.Setup(x => x.License).Returns("OK");
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+            var crediCardApplication = new CreditCardApplication();
+
+            sut.Evaluate(crediCardApplication);
+            bool isValid;
+            mockValidator.Verify(x => x.IsValid(null, out isValid));
         }
     }
 }
