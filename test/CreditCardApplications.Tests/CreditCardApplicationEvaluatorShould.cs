@@ -170,13 +170,15 @@ namespace CreditCardApplications.Tests
         {
             var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
             mockValidator.Setup(x => x.License).Returns("OK");
-            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
+            mockValidator.Setup(x => x.IsValid(It.IsAny<string>()))
+                            .Returns(true)
+                            //Throws an event automatically.
+                            .Raises(x => x.ValidatorLookupPerformed += null, EventArgs.Empty);
 
             var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
             var creditCardApplication = new CreditCardApplication { FrequentFlyerNumber = "x", Age = 25 };
 
-            //Raising an event manually to increase the ValidatorLookupCount.
-            mockValidator.Raise(x => x.ValidatorLookupPerformed += null, EventArgs.Empty);
+            sut.Evaluate(creditCardApplication);
 
             Assert.Equal(1, sut.ValidatorLookupCount);
         }
