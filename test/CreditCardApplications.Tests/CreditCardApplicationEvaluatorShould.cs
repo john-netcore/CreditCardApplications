@@ -24,7 +24,7 @@ namespace CreditCardApplications.Tests
         public void ReferYoungApplications()
         {
             bool isValid = true;
-            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>(MockBehavior.Strict);
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
             mockValidator.Setup(x => x.IsValid(It.IsAny<string>(), out isValid));
             mockValidator.Setup(x => x.License).Returns("OK");
 
@@ -60,7 +60,7 @@ namespace CreditCardApplications.Tests
         public void ReferInvalidFrequentFlyerApplications()
         {
             bool isValid = false;
-            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>(MockBehavior.Strict);
+            Mock<IFrequentFlyerNumberValidator> mockValidator = new Mock<IFrequentFlyerNumberValidator>();
             mockValidator.Setup(x => x.IsValid(It.IsAny<string>(), out isValid));
             mockValidator.Setup(x => x.License).Returns("OK");
 
@@ -155,5 +155,7 @@ namespace CreditCardApplications.Tests
             sut.Evaluate(crediCardApplication);
             mockValidator.VerifySet(x => x.ValidationMode = ValidationMode.Detailed);
         }
+
+
     }
 }
