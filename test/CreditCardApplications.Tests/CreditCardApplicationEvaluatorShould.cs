@@ -154,7 +154,15 @@ namespace CreditCardApplications.Tests
         public void ReferWhenFrequentlyFlyerValidationError()
         {
             var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+            mockValidator.Setup(x => x.License).Returns("OK");
+            mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Throws<Exception>();
 
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
+            var crediCardApplication = new CreditCardApplication { Age = 42 };
+
+            var decision = sut.Evaluate(crediCardApplication);
+
+            Assert.Equal(CreditCardApplicationDecision.ReferredToHuman, decision);
         }
     }
 }
