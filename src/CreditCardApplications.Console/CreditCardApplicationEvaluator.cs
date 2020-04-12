@@ -8,10 +8,17 @@ namespace CreditCardApplications.Console
         private const int HighIncomeThreshhold = 100_000;
         private const int LowIncomeThreshhold = 20_000;
         private readonly IFrequentFlyerNumberValidator _validator;
+        public int ValidatorLookupCount { get; private set; }
 
         public CreditCardApplicationEvaluator(IFrequentFlyerNumberValidator validator)
         {
             _validator = validator ?? throw new ArgumentNullException(nameof(validator));
+            _validator.ValidatorLookupPerformed += ValidatorLookupPerformed;
+        }
+
+        private void ValidatorLookupPerformed(object sender, EventArgs e)
+        {
+            ValidatorLookupCount++;
         }
 
         public CreditCardApplicationDecision Evaluate(CreditCardApplication application)

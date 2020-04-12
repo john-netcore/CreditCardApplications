@@ -1,3 +1,5 @@
+using System;
+
 namespace CreditCardApplications.Console
 {
     public interface IFrequentFlyerNumberValidator
@@ -9,6 +11,8 @@ namespace CreditCardApplications.Console
         bool IsValid(string frequentflyerNumber);
 
         void IsValid(string frequentflyerNumber, out bool isValid);
+
+        event EventHandler ValidatorLookupPerformed;
     }
 
     public enum ValidationMode

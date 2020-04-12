@@ -1,3 +1,5 @@
+using System;
+
 namespace CreditCardApplications.Console
 {
     public class FrequentFlyerNumberValidatorService : IFrequentFlyerNumberValidator
@@ -9,6 +11,8 @@ namespace CreditCardApplications.Console
             get => throw new System.NotImplementedException("For Demo purposes");
             set => throw new System.NotImplementedException("For Demo purposes");
         }
+
+        public event EventHandler ValidatorLookupPerformed;
 
         public bool IsValid(string frequentflyerNumber)
         {
