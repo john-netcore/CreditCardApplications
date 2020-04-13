@@ -199,5 +199,22 @@ namespace CreditCardApplications.Tests
 
             Assert.Equal(CreditCardApplicationDecision.ReferredToHumanFraudRisk, decision);
         }
+
+        [Fact]
+        public void LinqToMocks()
+        {
+            IFrequentFlyerNumberValidator mockValidator = Mock.Of<IFrequentFlyerNumberValidator>
+                (
+                    validator =>
+                    validator.License == "OK" && validator.IsValid(It.IsAny<string>()) == true
+                );
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator);
+            var creditCardApplication = new CreditCardApplication { Age = 25 };
+
+            var decision = sut.Evaluate(creditCardApplication);
+
+            Assert.Equal(CreditCardApplicationDecision.AutoDeclined, decision);
+        }
     }
 }
