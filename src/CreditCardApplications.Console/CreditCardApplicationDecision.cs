@@ -5,6 +5,7 @@ namespace CreditCardApplications.Console
         Unknown,
         AutoAccepted,
         AutoDeclined,
-        ReferredToHuman
+        ReferredToHuman,
+        ReferredToHumanFraudRisk
     }
 }
