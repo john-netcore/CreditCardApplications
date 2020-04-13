@@ -182,5 +182,22 @@ namespace CreditCardApplications.Tests
 
             Assert.Equal(1, sut.ValidatorLookupCount);
         }
+
+        [Fact]
+        public void ReferFraudRisk()
+        {
+            var mockValidator = new Mock<IFrequentFlyerNumberValidator>();
+
+            //Mock for the concrete class FraudLookup
+            var mockFraudLookup = new Mock<FraudLookup>();
+            mockFraudLookup.Setup(x => x.IsFraudRisk(It.IsAny<CreditCardApplication>())).Returns(true);
+
+            var sut = new CreditCardApplicationEvaluator(mockValidator.Object, mockFraudLookup.Object);
+            var creditCardApplication = new CreditCardApplication();
+
+            var decision = sut.Evaluate(creditCardApplication);
+
+            Assert.Equal(CreditCardApplicationDecision.ReferredToHumanFraudRisk, decision);
+        }
     }
 }
